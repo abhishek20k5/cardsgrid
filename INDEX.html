@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12 Cards Example with CSS</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        #card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .card {
+            width: 150px;
+            height: 200px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            background-color: #fff;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card img {
+            max-width: 100%;
+            max-height: 60%;
+            border-radius: 10px;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .card h3 {
+            margin: 10px 0 0 0;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h1>Card Grid</h1>
+    <div id="card-container">
+        <!-- Cards will be generated here -->
+    </div>
+
+    <script type="text/javascript">
+        // Card class definition
+        class Card {
+            constructor(id, title, info, imageSrc) {
+                this.id = id;
+                this.title = title;
+                this.info = info;
+                this.imageSrc = imageSrc;
+            }
+
+            render() {
+                const cardElement = document.createElement('div');
+                cardElement.classList.add('card');
+                cardElement.innerHTML = `
+                    <img src="${this.imageSrc}" alt="${this.title}">
+                    <h3>${this.title}</h3>
+                `;
+                cardElement.onclick = () => this.openCardPage();
+                return cardElement;
+            }
+
+            openCardPage() {
+                const newWindow = window.open("", "_blank");
+                newWindow.document.write(`
+                    <html>
+                    <head>
+                        <title>${this.title}</title>
+                        <style>
+                            body {
+                                font-family: Arial, sans-serif;
+                                padding: 20px;
+                                background-color: #f4f4f4;
+                                color: #333;
+                            }
+                            button {
+                                padding: 10px 20px;
+                                font-size: 16px;
+                                cursor: pointer;
+                                margin-top: 20px;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <h1>${this.title}</h1>
+                        <p>${this.info}</p>
+                        <button onclick="window.close()">Close</button>
+                    </body>
+                    </html>
+                `);
+                newWindow.document.close();
+            }
+        }
+
+        // CardContainer class definition
+        class CardContainer {
+            constructor(containerId) {
+                this.container = document.getElementById(containerId);
+                this.cards = [];
+            }
+
+            addCard(card) {
+                this.cards.push(card);
+                this.container.appendChild(card.render());
+            }
+
+            addCards(cards) {
+                cards.forEach(card => this.addCard(card));
+            }
+        }
+
+        // Initialize card container
+        const cardContainer = new CardContainer('card-container');
+
+        // Create card objects with imageSrc
+        const cards = [
+            new Card(1, "Card 1", "This is the information for Card 1", "https://storage.googleapis.com/static.elsoldemexico.com.mx/elesto/2023/05/Stephen-Curry-vs-LeBron-James-es-una-de-las-grandes-rivalidades-de-la-NBA.jpg"),
+            new Card(2, "Card 2", "This is the information for Card 2", "https://penaltyfile.com/wp-content/uploads/2020/06/different-types-of-sports-June32020-28-min.jpg"),
+            new Card(3, "Card 3", "This is the information for Card 3", "https://cdn.britannica.com/83/126383-050-38B8BE25/Michael-Phelps-American-Milorad-Cavic-final-Serbia-2008.jpg"),
+            new Card(4, "Card 4", "This is the information for Card 4", "http://progressivesoccertraining.com/wp-content/uploads/2021/01/how-to-run-faster.jpg"),
+            new Card(5, "Card 5", "This is the information for Card 5", "https://miro.medium.com/max/3000/1*bHf1bqIQEJmtRDnuxVPdfg.jpeg"),
+            new Card(6, "Card 6", "This is the information for Card 6", "https://thecgapress.cga.school/wp-content/uploads/2021/07/download-1.jpg"),
+            new Card(7, "Card 7", "This is the information for Card 7", "https://japan-forward.com/wp-content/uploads/2021/08/longjump1-2048x1475.jpg"),
+            new Card(8, "Card 8", "This is the information for Card 8", "https://files.prokerala.com/news/photos/imgs/1024/men-s-javelin-throw-final-at-the-paris-olympics-1765641.jpg"),
+            new Card(9, "Card 9", "This is the information for Card 9", "https://static1.hotcarsimages.com/wordpress/wp-content/uploads/2021/01/vaydor-g35-pinterest-1-Cropped.jpg"),
+            new Card(10, "Card 10", "This is the information for Card 10", "https://static.pexels.com/photos/907/person-sport-bike-bicycle.jpg"),
+            new Card(11, "Card 11", "This is the information for Card 11", "https://static.pexels.com/photos/907/person-sport-bike-bicycle.jpg"),
+            new Card(12, "Card 12", "This is the information for Card 12", "https://static.pexels.com/photos/907/person-sport-bike-bicycle.jpg")
+        ];
+
+        // Add all cards to the container
+        cardContainer.addCards(cards);
+    </script>
+</body>
+</html>
+
